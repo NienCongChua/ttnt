@@ -1,4 +1,4 @@
-#Tim kiem theo chieu rong
+# Bfs
 sodo = {
     "A": ["C", "D", "E"],
     "E": [],
