@@ -1,52 +1,58 @@
-sodo = {
-    "A": ["C", "D", "E"],
-    "E": [],
-    "C": ["F"],
-    "F": ["M", "H"],
-    "M": [],
-    "H": [],
-    "D": ["I", "G"],
-    "I": [],
-    "G": ["R", "K"],
-    "R": [],
-    "K": []
+# Dfs
+cay = {
+    'A': ['B', 'C', 'D'],
+    'B': ['M', 'N'],
+    'C': ['L'],
+    'D': ['O', 'P'],
+    'M': ['X', 'Y'],
+    'N': ['U', 'V'],
+    'L': [],
+    'O': ['I', 'J'], 
+    'P': [],
+    'X': [],
+    'Y': ['R', 'S'],
+    'U': [],
+    'V': ['G', 'H'], 
+    'I': [],
+    'J': [],
+    'R': [],
+    'S': [],
+    'G': [],
+    'H': []
 }
 
-
-def chacon(mohinh, con):
-    for i in mohinh:
-        if con in mohinh[i]:
+def chacon(sodo, con):
+    for i in sodo:
+        if con in sodo[i]:
             return i
-    return []    
+    return []
 
 
-def timkiem(mohinh, batdau, dich):
+def dfs(sodo, batdau, ketthuc):
     Mo = [batdau]
-    tmp = []
     Dong = []
-    dichh = dich
+    DuongDi = [ketthuc]
     while Mo:
-        Dinh = Mo.pop(0)
-        if Dinh == dich:
-            print(dich, "--> la dich --> dung tim kiem")
+        Dinh = Mo.pop()
+        print(f"{Dinh} ", end='')
+        if Dinh == ketthuc:
+            print("--> Là đích --> Dừng tìm kiếm!")
             Mo = []
         else:
             if Dinh not in Dong:
+                DinhKe = []
+                for i in sodo[Dinh]:
+                    DinhKe.insert(0, i)
+                for i in DinhKe:
+                    Mo.append(i)
                 Dong.append(Dinh)
-                print(Dinh, end=' ')
-                for Dinhke in (mohinh[Dinh]):
-                    tmp.insert(0, Dinhke)
-                while tmp:
-                    Mo.insert(0, tmp.pop(0))
-    while dich != batdau:
-        duongdi = [dich]
-        print(f"Cha cua {dich} la {chacon(mohinh, dich)}")
-        duongdi.insert(0, chacon(mohinh, dich))
-        dich = chacon(mohinh, dich)
-        duongdi.append(dichh)
-    print(f"==> Duong di = {duongdi}")
+            else:
+                continue
+    
+    while DuongDi[0] != batdau:
+        print(f"Cha của {DuongDi[0]} là {chacon(sodo, DuongDi[0])}.")
+        DuongDi.insert(0, chacon(sodo, DuongDi[0]))
+    return DuongDi    
 
 
-
-# A C F M H D I --> la dich --> dung tim kiem
-timkiem(sodo, "A", "I")
+print(f"Đường đi: {dfs(sodo=cay, batdau='A', ketthuc='G')}")
